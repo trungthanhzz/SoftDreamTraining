@@ -1,0 +1,74 @@
+﻿@page "/student-list"
+<PageTitle>Danh sách sinh viên</PageTitle>
+
+<h3>Danh sách sinh viên</h3>
+<GridRow>
+    <GridCol Span="8">
+        <StudentForm @ref="StudentForm" Clear="Clear"></StudentForm>
+    </GridCol>
+    <GridCol Span="4" Offset="12">
+        <Button Icon="file-excel" Type="primary">Xuất excel</Button>
+    </GridCol>
+</GridRow>
+<br />
+<div>
+    <EditForm Model="@studentFilter" OnValidSubmit="@OnFinishSearchAsync" OnInvalidSubmit="@OnFinishFailedSearch" @ref="_formSearchList">
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label for="name">Name</label>
+                <Input @bind-Value="@studentFilter.Name" id="name" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="address">Address</label>
+                <Input @bind-Value="@studentFilter.Address" id="address" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="date1">Start Date</label>
+                <DatePicker @bind-Value="@studentFilter.StartDate" id="date1" Format="dd/MM/yyyy" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="date2">End Date</label>
+                <DatePicker @bind-Value="@studentFilter.EndDate" id="date2" Format="dd/MM/yyyy" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="form-select">Class</label>
+                <InputSelect @bind-Value="@studentFilter.ClassId" class="form-select">
+                    <option value="-1">All Class</option>
+                    @foreach (var c in classes)
+                    {
+                        <option value="@c.Id">@c.ClassName</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="form-group col-md-2 d-flex justify-content-center align-items-center">
+                <Button HtmlType="submit" Style="margin-top: 24px;">Search</Button>
+            </div>
+        </div>
+        <br />
+
+    </EditForm>
+</div>
+<br />
+<Table @ref="table" TItem="StudentViewDto" DataSource="@studentViews" @bind-PageIndex="_pageIndex" @bind-PageSize="_pageSize" OnChange="OnPagingAsync" Total="_total">
+    <Column @bind-Field="context.Stt" Title="STT" Sortable></Column>
+     <Column @bind-Field="context.Name" Title="Họ tên" Sortable></Column>
+     <Column @bind-Field="context.Dob" Title="Ngày sinh"></Column>
+     <Column @bind-Field="context.Address" Title="Địa chỉ"></Column>
+     <Column @bind-Field="context.ClassName" Title="Tên lớp"></Column>
+     <ActionColumn Title="Action">
+         <Space Size=@("middle")>
+             <SpaceItem>
+                 <Button OnClick="()=>UpdateStudent(context)"><Icon Type="edit" Theme="outline" /></Button>
+             </SpaceItem>
+             <SpaceItem>
+                 <Popconfirm Title="Sure to delete?"
+                             OkText="Yes"
+                             CancelText="No"
+                             OnConfirm="()=>DeleteStudent(context)">
+                     <Button><Icon Type="delete" Theme="outline" /></Button>
+                 </Popconfirm>
+             </SpaceItem>
+         </Space>
+     </ActionColumn>
+ </Table>
+ <p>Tổng số sinh viên: @_total</p>

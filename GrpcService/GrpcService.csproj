@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6ed91341-092d-4bcb-961d-e358c877ac74</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="FluentNHibernate" Version="3.3.0" />
+	  <PackageReference Include="Grpc.AspNetCore" Version="2.59.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+	  <PackageReference Include="NHibernate" Version="5.4.6" />
+	  <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+	  <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Share\Share.csproj" />
+  </ItemGroup>
+
+</Project>

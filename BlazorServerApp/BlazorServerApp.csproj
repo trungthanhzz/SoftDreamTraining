@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AntDesign" Version="0.15.4" />
+		<PackageReference Include="AntDesign.Charts" Version="0.2.2" />
+		<PackageReference Include="FluentNHibernate" Version="3.2.1" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.59.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Include="NHibernate" Version="5.4.5" />
+		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
+		<PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="22.2.10" />
+		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Share\Share.csproj" />
+	</ItemGroup>
+
+</Project>
