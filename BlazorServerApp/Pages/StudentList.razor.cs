@@ -20,6 +20,7 @@ namespace BlazorServerApp.Pages
         private PageView<Student> pagedData = new PageView<Student>();
         private List<StudentViewDto> studentViews = new List<StudentViewDto>();
         private List<Class> classes = new List<Class>();
+        public List<Student> student2 = new List<Student>();
 
         StudentForm StudentForm;
 
@@ -38,6 +39,7 @@ namespace BlazorServerApp.Pages
         private async Task LoadDataAsync()
         {
             pagedData = await studentService.GetDataPageAsync(_pageIndex, _pageSize, studentFilter);
+            student2 = pagedData.Data ?? new List<Student>();
             studentViews = studentMapper.MapListToListViewDtoWithIndex(pagedData.Data, _pageSize * (_pageIndex - 1));
             _total = pagedData.PageCount;
             StateHasChanged();
@@ -85,18 +87,26 @@ namespace BlazorServerApp.Pages
 
         private void UpdateStudent(StudentViewDto studentView)
         {
-            student = studentService.GetStudentById(studentView.Id);
+            //student = studentService.GetStudentById(studentView.Id);
+            student = student2?.FirstOrDefault(c => c.Id == studentView.Id);
             StudentForm.formMode = 2;
             StudentForm.student = student;
             StudentForm.Open();
-            ReloadListAsync();
         }
 
         private void DeleteStudent(StudentViewDto studentView)
         {
-            student = studentService.GetStudentById(studentView.Id);
-            studentService.DeleteStudent(student);
-            messageService.Success("Xóa thành công");
+            var result = false;
+            student = student2?.FirstOrDefault(c => c.Id == studentView.Id);
+            result = studentService.DeleteStudent(student);
+            if (result == true)
+            {
+                messageService.Success("Xóa thành công");
+            }
+            else
+            {
+                messageService.Error("Lỗi hệ thống");
+            }
             ReloadListAsync();
         }
 

@@ -75,10 +75,12 @@ namespace BlazorServerApp
         public List<StudentViewDto> MapListToListViewDtoWithIndex(List<Student> list, int startIndex)
         { 
             List<StudentViewDto> listStudentView = new List<StudentViewDto>();
-            for (int i = 0; i < list.Count; i++)
+            var i = 1;
+            foreach (var item in list)
             {
-                StudentViewDto s = MapEntityToViewDto(list[i]);
-                s.Stt = startIndex + i + 1;
+                StudentViewDto s = MapEntityToViewDto(item);
+                s.Stt = startIndex + i;
+                i++;
                 listStudentView.Add(s);
             }
             return listStudentView;

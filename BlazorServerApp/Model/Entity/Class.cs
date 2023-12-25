@@ -12,7 +12,5 @@ namespace BlazorServerApp
         public virtual Teacher? Teacher { get; set; }
         public virtual string ClassName { get; set; }
         public virtual string Subject { get; set; }
-
-        public virtual ICollection<Student> Students { get; set; }
     }
 }

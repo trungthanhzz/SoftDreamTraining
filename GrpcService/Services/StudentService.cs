@@ -16,20 +16,22 @@ namespace GrpcService
             _studentRepository = studentRepository;
         }   
 
-        public Empty AddNewStudent(StudentGrpc request, CallContext context = default)
+        public BooleanGrpc AddNewStudent(StudentGrpc request, CallContext context = default)
         {
             Student student = studentMapper.MapGrpcToEntity(request);
-            _studentRepository.AddNewStudent(student);
-            Empty empty = new Empty();
-            return empty;
+            BooleanGrpc booleanGrpc = new BooleanGrpc();
+            booleanGrpc.Empty = new Empty();
+            booleanGrpc.Result = _studentRepository.AddNewStudent(student);
+            return booleanGrpc;
         }
 
-        public Empty DeleteStudent(StudentGrpc request, CallContext context = default)
+        public BooleanGrpc DeleteStudent(StudentGrpc request, CallContext context = default)
         {
             Student student = studentMapper.MapGrpcToEntity(request);
-            _studentRepository.DeleteStudent(student);
-            Empty empty = new Empty();
-            return empty;
+            BooleanGrpc booleanGrpc = new BooleanGrpc();
+            booleanGrpc.Empty = new Empty();
+            booleanGrpc.Result = _studentRepository.DeleteStudent(student);
+            return booleanGrpc;
         }
 
         public ListStudent GetAllStudents(Empty request, CallContext context = default)
@@ -87,12 +89,13 @@ namespace GrpcService
             }
         }
 
-        public Empty UpdateStudent(StudentGrpc request, CallContext context = default)
+        public BooleanGrpc UpdateStudent(StudentGrpc request, CallContext context = default)
         {
             Student student = studentMapper.MapGrpcToEntity(request);
-            _studentRepository.UpdateStudent(student);
-            Empty empty = new Empty();
-            return empty;
+            BooleanGrpc booleanGrpc = new BooleanGrpc();
+            booleanGrpc.Empty = new Empty();
+            booleanGrpc.Result = _studentRepository.UpdateStudent(student);
+            return booleanGrpc;
         }
 
         private StudentFilter MapGrpcToFilter(StudentFilterGrpc studentFilterGrpc)

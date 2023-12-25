@@ -6,9 +6,6 @@
     <GridCol Span="8">
         <StudentForm @ref="StudentForm" Clear="Clear"></StudentForm>
     </GridCol>
-    <GridCol Span="4" Offset="12">
-        <Button Icon="file-excel" Type="primary">Xuất excel</Button>
-    </GridCol>
 </GridRow>
 <br />
 <div>
@@ -50,8 +47,8 @@
 </div>
 <br />
 <Table @ref="table" TItem="StudentViewDto" DataSource="@studentViews" @bind-PageIndex="_pageIndex" @bind-PageSize="_pageSize" OnChange="OnPagingAsync" Total="_total">
-    <Column @bind-Field="context.Stt" Title="STT" Sortable></Column>
-     <Column @bind-Field="context.Name" Title="Họ tên" Sortable></Column>
+    <Column @bind-Field="context.Stt" Title="STT"></Column>
+     <Column @bind-Field="context.Name" Title="Họ tên"></Column>
      <Column @bind-Field="context.Dob" Title="Ngày sinh"></Column>
      <Column @bind-Field="context.Address" Title="Địa chỉ"></Column>
      <Column @bind-Field="context.ClassName" Title="Tên lớp"></Column>

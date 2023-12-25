@@ -17,7 +17,7 @@ namespace GrpcService
             _classRepository = classRepository;
             _session = session;
         }
-        public void AddNewStudent(Student student)
+        public Boolean AddNewStudent(Student student)
         {
             student.Id = GetIdNewStudent();
             using (var session = _session.OpenSession())
@@ -28,11 +28,13 @@ namespace GrpcService
                     {
                         session.Save(student);
                         transaction.Commit();
+                        return true;
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"An error occurred: {ex.Message}");
                         transaction.Rollback();
+                        return false;
                     }
                 }
             }
@@ -43,7 +45,7 @@ namespace GrpcService
             return student.Id + 1;
         }
 
-        public void DeleteStudent(Student student)
+        public Boolean DeleteStudent(Student student)
         {
             using (var session = _session.OpenSession()) 
             using (var transaction = session.BeginTransaction())
@@ -52,11 +54,12 @@ namespace GrpcService
                 {
                     session.Delete(student);
                     transaction.Commit();
+                    return true;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
                     transaction.Rollback();
+                    return false;
                 }
             }
         }
@@ -113,7 +116,7 @@ namespace GrpcService
             }
         }
 
-        public void UpdateStudent(Student student)
+        public Boolean UpdateStudent(Student student)
         {
             using (var session = _session.OpenSession())
             {
@@ -123,12 +126,14 @@ namespace GrpcService
                     {
                         session.Update(student);
                         transaction.Commit();
+                        return true;
                     }
                     catch (Exception e)
                     {
 
                         Console.WriteLine(e.Message);
                         transaction.Rollback();
+                        return false;
                     }
                 }
             }

@@ -88,6 +88,16 @@ public class StudentFilterGrpc
     }
 }
 
+[DataContract]
+public class BooleanGrpc
+{
+    [DataMember(Order = 1)]
+    public Boolean Result { get; set; }
+
+    [DataMember(Order =2)]
+    public Empty Empty { get; set; }
+}
+
 [ServiceContract]
 public interface StudentProto
 {
@@ -95,13 +105,13 @@ public interface StudentProto
     ListStudent GetAllStudents(Empty request, CallContext context = default);
 
     [OperationContract]
-    Empty AddNewStudent(StudentGrpc request, CallContext context = default);
+    BooleanGrpc AddNewStudent(StudentGrpc request, CallContext context = default);
 
     [OperationContract]
-    Empty DeleteStudent(StudentGrpc request, CallContext context = default);
+    BooleanGrpc DeleteStudent(StudentGrpc request, CallContext context = default);
 
     [OperationContract]
-    Empty UpdateStudent(StudentGrpc request, CallContext context = default);
+    BooleanGrpc UpdateStudent(StudentGrpc request, CallContext context = default);
 
     [OperationContract]
     StudentGrpc GetStudentById (IntGrpc request, CallContext context = default);

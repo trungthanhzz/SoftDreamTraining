@@ -30,7 +30,7 @@ namespace BlazorServerApp
         /// Hàm xóa 1 sinh viên
         /// </summary>
         /// <param name="student"></param>
-        public void DeleteStudent(Student student);
+        public Boolean DeleteStudent(Student student);
 
         /// <summary>
         /// Hàm sắp xếp sinh viên theo tên

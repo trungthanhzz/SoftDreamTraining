@@ -50,13 +50,12 @@ namespace BlazorServerApp.Pages
                 if (result)
                 {
                     Success();
-                    //await eventCallback.InvokeAsync();
+                    SubmitTrue();
                 }
                 else
                 {
                     Error();
                 }
-                Close();
             }
             catch (Exception ex)
             {
@@ -77,9 +76,14 @@ namespace BlazorServerApp.Pages
 
         public void Close()
         {
+            visible = false;
+        }
+
+        public void SubmitTrue ()
+        {
             Clear?.Invoke();
             visible = false;
-            //StateHasChanged();
+
         }
 
         private void Error()

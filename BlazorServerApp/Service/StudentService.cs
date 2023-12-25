@@ -20,28 +20,31 @@ namespace BlazorServerApp
         {
             try
             {
+                BooleanGrpc booleanGrpc = new BooleanGrpc();
                 StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
                 var client = GetService();
-                client.AddNewStudent(studentGrpc);
-                return true;
+                booleanGrpc = client.AddNewStudent(studentGrpc);
+                return booleanGrpc.Result;
             }
             catch (Exception ex)
             {
-                return false;
                 throw;
             }
         }
 
-        public void DeleteStudent(Student student)
+        public Boolean DeleteStudent(Student student)
         {
             try
             {
+                BooleanGrpc booleanGrpc = new BooleanGrpc();
                 StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
                 var client = GetService();
-                client.DeleteStudent(studentGrpc);
+                booleanGrpc = client.DeleteStudent(studentGrpc);
+                return booleanGrpc.Result;
             }
             catch (Exception ex)
             {
+                return false;
                 throw;
             }
         }
@@ -104,10 +107,11 @@ namespace BlazorServerApp
         {
             try
             {
+                BooleanGrpc booleanGrpc = new BooleanGrpc();
                 StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
                 var client = GetService();
-                client.UpdateStudent(studentGrpc);
-                return true;
+                booleanGrpc = client.UpdateStudent(studentGrpc);
+                return booleanGrpc.Result;
             }
             catch (Exception ex)
             {
