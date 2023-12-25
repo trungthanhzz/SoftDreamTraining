@@ -9,7 +9,6 @@ namespace BlazorServerApp.Pages
     {
         [Inject] IStudentService studentService { get; set; }
         [Inject] IClassService classService { get; set; }
-        [Inject] IStudentRepository studentRepository { get; set; }
         [Inject] StudentMapper studentMapper { get; set; }
 
         [Inject] IMessageService messageService { get; set; }

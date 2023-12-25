@@ -18,13 +18,13 @@ namespace BlazorServerApp
         /// Hàm thêm mới sinh viên
         /// </summary>
         /// <param name="student"></param>
-        public void AddNewStudent(Student student);
+        public Boolean AddNewStudent(Student student);
 
         /// <summary>
         /// Hàm cập nhật thông tin sinh viên
         /// </summary>
         /// <param name="studentUpdate"></param>
-        public void UpdateStudent(Student student);
+        public Boolean UpdateStudent(Student student);
 
         /// <summary>
         /// Hàm xóa 1 sinh viên

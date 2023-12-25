@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Text.Unicode;
 using System.Globalization;
-using NHibernate;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,13 +13,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<IStudentService, StudentService>();
-builder.Services.AddSingleton<IStudentRepository, StudentRepository>();
 builder.Services.AddSingleton<IClassService, ClassService>();
-builder.Services.AddSingleton<IClassRepository, ClassRepository>();
 builder.Services.AddAntDesign();
 builder.Services.AddSingleton<StudentMapper>();
 builder.Services.AddLocalization();
-builder.Services.AddSingleton<ISessionFactory>(NHibernateConfig.BuildSessionFactory());
 
 
 

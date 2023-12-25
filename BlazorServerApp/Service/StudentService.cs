@@ -6,13 +6,6 @@ namespace BlazorServerApp
 {
     public class StudentService : IStudentService
     {
-        private readonly IStudentRepository _studentRepository;
-
-        public StudentService(IStudentRepository studentRepository)
-        {
-            _studentRepository = studentRepository;
-        }
-
         StudentMapper studentMapper = new StudentMapper();
 
         public StudentProto GetService()
@@ -23,14 +16,34 @@ namespace BlazorServerApp
             return channel.CreateGrpcService<StudentProto>();
         }
 
-        public void AddNewStudent(Student student)
+        public Boolean AddNewStudent(Student student)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
+                var client = GetService();
+                client.AddNewStudent(studentGrpc);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
         }
 
         public void DeleteStudent(Student student)
         {
-            _studentRepository.DeleteStudent(student);
+            try
+            {
+                StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
+                var client = GetService();
+                client.DeleteStudent(studentGrpc);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public List<Student> GetAllStudents()
@@ -87,9 +100,20 @@ namespace BlazorServerApp
             throw new NotImplementedException();
         }
 
-        public void UpdateStudent(Student student)
+        public Boolean UpdateStudent(Student student)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StudentGrpc studentGrpc = studentMapper.MapEntityToGrpc(student);
+                var client = GetService();
+                client.UpdateStudent(studentGrpc);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw;
+            }
         }
 
         public async Task<PageView<Student>> GetDataPageAsync(int pageNumber, int pageSize, StudentFilter studentFilter)

@@ -7,12 +7,6 @@ namespace BlazorServerApp
     public class ClassService : IClassService
     {
         ClassMapper classMapper = new ClassMapper();
-        private readonly IClassRepository _classRepository;
-
-        public ClassService(IClassRepository classRepository)
-        {
-            _classRepository = classRepository;
-        }
 
         public Class GetClassById(int id)
         {

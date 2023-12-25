@@ -5,11 +5,9 @@ namespace BlazorServerApp
     public class StudentMapper
     {
         private readonly IClassService _classService;
-        private readonly IClassRepository _classRepository;
         private readonly IStudentService _studentService;
-        public StudentMapper(IClassRepository classRepository, IClassService classService, IStudentService studentService)
+        public StudentMapper(IClassService classService, IStudentService studentService)
         {
-            _classRepository = classRepository;
             _classService = classService;
             _studentService = studentService;
         }
@@ -25,11 +23,7 @@ namespace BlazorServerApp
             studentGrpc.Name = student.Name;
             studentGrpc.Address = student.Address;
             studentGrpc.DateOfBirth = student.DateOfBirth;
-            if (student.Class == null)
-            {
-                student.Class = new Class();
-            }
-            student.Class.Id = studentGrpc.ClassId; 
+            studentGrpc.ClassId = student.Class.Id;
             return studentGrpc;
         }
         public Student MapGrpcToEntity(StudentGrpc studentGrpc)

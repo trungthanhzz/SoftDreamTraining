@@ -19,6 +19,7 @@ namespace GrpcService
         }
         public void AddNewStudent(Student student)
         {
+            student.Id = GetIdNewStudent();
             using (var session = _session.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
@@ -36,7 +37,12 @@ namespace GrpcService
                 }
             }
         }
-   
+        public int GetIdNewStudent()
+        {
+            var student = GetAllStudents().OrderByDescending(x => x.Id).First();
+            return student.Id + 1;
+        }
+
         public void DeleteStudent(Student student)
         {
             using (var session = _session.OpenSession()) 

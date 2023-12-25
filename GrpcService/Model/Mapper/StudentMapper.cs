@@ -11,6 +11,10 @@ namespace GrpcService
             studentGrpc.Name = student.Name;
             studentGrpc.Address = student.Address;
             studentGrpc.DateOfBirth = student.DateOfBirth;
+            if (student.Class == null)
+            {
+                student.Class = new Class();
+            }
             studentGrpc.ClassId = student.Class.Id;
             return studentGrpc;
         }
@@ -21,6 +25,10 @@ namespace GrpcService
             student.Name = studentGrpc.Name;
             student.Address = studentGrpc.Address;
             student.DateOfBirth = studentGrpc.DateOfBirth;
+            if (student.Class == null)
+            {
+                student.Class = new Class();
+            }
             student.Class.Id = studentGrpc.ClassId;
             return student;
         }
