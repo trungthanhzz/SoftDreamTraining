@@ -1,4 +1,5 @@
-﻿using Share;
+﻿using AntDesign.Charts;
+using Share;
 
 namespace BlazorServerApp
 {
@@ -48,8 +49,7 @@ namespace BlazorServerApp
                 StudentViewDto StudentViewDto = new StudentViewDto();
                 StudentViewDto.Name = student.Name;
                 StudentViewDto.Address = student.Address;
-                String className = _classService.GetClassById(student.Class.Id).ClassName;
-                StudentViewDto.ClassName = className;
+                StudentViewDto.ClassName = student.Class.ClassName;
                 StudentViewDto.Dob = student.DateOfBirth.ToString("dd/MM/yyyy");
                 StudentViewDto.Id = student.Id;
                 return StudentViewDto;
@@ -60,22 +60,11 @@ namespace BlazorServerApp
             }
         }
 
-        public List<StudentViewDto> MapListToListViewDto (List<Student> students)
-        {
-            List<StudentViewDto> list = new List<StudentViewDto>();
-            for (int i = 0; i < students.Count; i++)
-            {
-                StudentViewDto s = MapEntityToViewDto(students[i]);
-                s.Stt = i + 1;
-                list.Add(s);
-            }
-            return list;
-        }
-
         public List<StudentViewDto> MapListToListViewDtoWithIndex(List<Student> list, int startIndex)
         { 
             List<StudentViewDto> listStudentView = new List<StudentViewDto>();
             var i = 1;
+            
             foreach (var item in list)
             {
                 StudentViewDto s = MapEntityToViewDto(item);
@@ -83,6 +72,7 @@ namespace BlazorServerApp
                 i++;
                 listStudentView.Add(s);
             }
+
             return listStudentView;
         }
 

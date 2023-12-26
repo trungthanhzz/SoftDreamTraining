@@ -1,71 +1,55 @@
 ﻿@page "/student-list"
 <PageTitle>Danh sách sinh viên</PageTitle>
 
-<h3>Danh sách sinh viên</h3>
+<Title Level="3">Danh sách sinh viên</Title>
 <GridRow>
     <GridCol Span="8">
         <StudentForm @ref="StudentForm" Clear="Clear"></StudentForm>
     </GridCol>
 </GridRow>
 <br />
-<div>
-    <EditForm Model="@StudentFilter" OnValidSubmit="@OnFinishSearchAsync" OnInvalidSubmit="@OnFinishFailedSearch" @ref="_formSearchList">
-        <div class="row">
-            <div class="form-group col-md-2">
-                <label for="name">Name</label>
-                <Input @bind-Value="@StudentFilter.Name" id="name" />
-            </div>
-            <div class="form-group col-md-2">
-                <label for="address">Address</label>
-                <Input @bind-Value="@StudentFilter.Address" id="address" />
-            </div>
-            <div class="form-group col-md-2">
-                <label for="date1">Start Date</label>
-                <DatePicker @bind-Value="@StudentFilter.StartDate" id="date1" Format="dd/MM/yyyy" />
-            </div>
-            <div class="form-group col-md-2">
-                <label for="date2">End Date</label>
-                <DatePicker @bind-Value="@StudentFilter.EndDate" id="date2" Format="dd/MM/yyyy" />
-            </div>
-            <div class="form-group col-md-2">
-                <label for="form-select">Class</label>
-                <InputSelect @bind-Value="@StudentFilter.ClassId" class="form-select">
-                    <option value="-1">All Class</option>
-                    @foreach (var c in Classes)
-                    {
-                        <option value="@c.Id">@c.ClassName</option>
-                    }
-                </InputSelect>
-            </div>
-            <div class="form-group col-md-2 d-flex justify-content-center align-items-center">
-                <Button HtmlType="submit" Style="margin-top: 24px;">Search</Button>
-            </div>
-        </div>
-        <br />
+<EditForm Model="@StudentFilter" OnValidSubmit="@OnFinishSearchAsync" OnInvalidSubmit="@OnFinishFailedSearch" @ref="_formSearchList">
+    <Row Gutter="16">
+        <AntDesign.Col Span="6">
+            <Text>Name</Text>
+            <Input @bind-Value="@StudentFilter.Name" id="name" />
+        </AntDesign.Col>
+        <AntDesign.Col Span="6">
+            <Text>Address</Text>
+            <Input @bind-Value="@StudentFilter.Address" id="address" />
+        </AntDesign.Col>
+        <AntDesign.Col Span="6">
+            <Text>Class</Text>
+            <Select @bind-Value="@StudentFilter.ClassId" DataSource="Classes" ValueName="@nameof(Class.Id)" LabelName="@nameof(Class.ClassName)" AllowClear></Select>
+        </AntDesign.Col>
+        <AntDesign.Col Span="6">
+            <Button HtmlType="submit" Style="margin-top: 24px;">Search</Button>
+        </AntDesign.Col>
+    </Row>
+    <br />
 
-    </EditForm>
-</div>
+</EditForm>
 <br />
 <Table @ref="table" TItem="StudentViewDto" DataSource="@StudentViews" @bind-PageIndex="pageIndex" @bind-PageSize="pageSize" OnChange="OnPagingAsync" Total="total">
     <Column @bind-Field="context.Stt" Title="STT"></Column>
-     <Column @bind-Field="context.Name" Title="Họ tên"></Column>
-     <Column @bind-Field="context.Dob" Title="Ngày sinh"></Column>
-     <Column @bind-Field="context.Address" Title="Địa chỉ"></Column>
-     <Column @bind-Field="context.ClassName" Title="Tên lớp"></Column>
-     <ActionColumn Title="Action">
-         <Space Size=@("middle")>
-             <SpaceItem>
-                 <Button OnClick="()=>UpdateStudent(context)"><Icon Type="edit" Theme="outline" /></Button>
-             </SpaceItem>
-             <SpaceItem>
-                 <Popconfirm Title="Sure to delete?"
-                             OkText="Yes"
-                             CancelText="No"
-                             OnConfirm="()=>DeleteStudent(context)">
-                     <Button><Icon Type="delete" Theme="outline" /></Button>
-                 </Popconfirm>
-             </SpaceItem>
-         </Space>
-     </ActionColumn>
- </Table>
- <p>Tổng số sinh viên: @total</p>
+    <Column @bind-Field="context.Name" Title="Họ tên"></Column>
+    <Column @bind-Field="context.Dob" Title="Ngày sinh"></Column>
+    <Column @bind-Field="context.Address" Title="Địa chỉ"></Column>
+    <Column @bind-Field="context.ClassName" Title="Tên lớp"></Column>
+    <ActionColumn Title="Action">
+        <Space Size=@("middle")>
+            <SpaceItem>
+                <Button OnClick="()=>UpdateStudent(context)"><Icon Type="edit" Theme="outline" /></Button>
+            </SpaceItem>
+            <SpaceItem>
+                <Popconfirm Title="Sure to delete?"
+                            OkText="Yes"
+                            CancelText="No"
+                            OnConfirm="()=>DeleteStudent(context)">
+                    <Button><Icon Type="delete" Theme="outline" /></Button>
+                </Popconfirm>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
+<p>Tổng số sinh viên: @total</p>
