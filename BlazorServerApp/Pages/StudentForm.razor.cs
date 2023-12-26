@@ -36,14 +36,13 @@ namespace BlazorServerApp.Pages
             try
             {
                 bool result = false;
+                Student = StudentMapper.MapDtoToEntity(StudentDto);
                 if (Student.Id == 0)
                 {
-                    Student = StudentMapper.MapDtoToEntity(StudentDto);
                     result = StudentService.AddNewStudent(Student);
                 }
                 else
                 {
-                    Student = StudentMapper.MapDtoToEntity(StudentDto);
                     result = StudentService.UpdateStudent(Student);
                 }
                 if (result)
