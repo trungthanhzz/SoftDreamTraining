@@ -108,7 +108,7 @@ namespace BlazorServerApp
         public Student MapDtoToEntity (StudentDto studentDto)
         {
             Student student;
-            if (studentDto.Id == null)
+            if (studentDto.Id == 0)
             {
                 student = new Student();
                 student.Name = studentDto.Name;
