@@ -86,15 +86,14 @@ namespace BlazorServerApp
             return listStudentView;
         }
 
-        public StudentDto MapEntityToDto(Student student, int formMode)
+        public StudentDto MapEntityToDto(Student student)
         {
             StudentDto studentDto = new StudentDto();
-            //formMode = 1 là thêm mới
-            if (formMode == 1)
+            if (student.Id == 0)
             {
                 return studentDto;
             }
-            else if (formMode == 2) 
+            else
             {
                 studentDto.Id = student.Id;
                 studentDto.Name = student.Name;
@@ -106,25 +105,26 @@ namespace BlazorServerApp
             return null;
         }
 
-        public Student MapDtoToEntity (StudentDto studentDto, int formMode)
+        public Student MapDtoToEntity (StudentDto studentDto)
         {
             Student student;
-            if (formMode == 1)
+            if (studentDto.Id == null)
             {
                 student = new Student();
                 student.Name = studentDto.Name;
                 student.Address = studentDto.Address;
                 student.DateOfBirth = studentDto.DateOfBirth;
-                student.Class = _classService.GetClassById(studentDto.ClassId);
+                student.Class = new Class { Id = studentDto.ClassId};
                 return student;
             }
-            else if (formMode == 2)
+            else 
             {
-                student = _studentService.GetStudentById(studentDto.Id);
+                student = new Student();
+                student.Id = studentDto.Id;
                 student.Name = studentDto.Name;
                 student.Address = studentDto.Address;
                 student.DateOfBirth = studentDto.DateOfBirth;
-                student.Class = _classService.GetClassById(studentDto.ClassId);
+                student.Class = new Class { Id = studentDto.ClassId };
                 return student;
             }
             return null;

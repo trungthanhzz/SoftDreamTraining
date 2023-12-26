@@ -20,12 +20,6 @@ namespace GrpcService
 
             Property(x => x.DateOfBirth);
 
-            Bag(x => x.Classes, c =>
-            {
-                c.Key(k => k.Column("TeacherId"));
-                c.Cascade(Cascade.All | Cascade.DeleteOrphans);
-                c.Inverse(true);
-            }, r => r.OneToMany());
         }
     }
 }

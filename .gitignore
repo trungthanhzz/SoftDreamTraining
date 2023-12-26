@@ -442,3 +442,4 @@ iwyu_build/
 
 # fuzzer logs
 fuzz-*.log
+/BlazorServerApp/BlazorServerApp.sln

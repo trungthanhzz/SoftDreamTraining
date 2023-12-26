@@ -9,29 +9,29 @@
 </GridRow>
 <br />
 <div>
-    <EditForm Model="@studentFilter" OnValidSubmit="@OnFinishSearchAsync" OnInvalidSubmit="@OnFinishFailedSearch" @ref="_formSearchList">
+    <EditForm Model="@StudentFilter" OnValidSubmit="@OnFinishSearchAsync" OnInvalidSubmit="@OnFinishFailedSearch" @ref="_formSearchList">
         <div class="row">
             <div class="form-group col-md-2">
                 <label for="name">Name</label>
-                <Input @bind-Value="@studentFilter.Name" id="name" />
+                <Input @bind-Value="@StudentFilter.Name" id="name" />
             </div>
             <div class="form-group col-md-2">
                 <label for="address">Address</label>
-                <Input @bind-Value="@studentFilter.Address" id="address" />
+                <Input @bind-Value="@StudentFilter.Address" id="address" />
             </div>
             <div class="form-group col-md-2">
                 <label for="date1">Start Date</label>
-                <DatePicker @bind-Value="@studentFilter.StartDate" id="date1" Format="dd/MM/yyyy" />
+                <DatePicker @bind-Value="@StudentFilter.StartDate" id="date1" Format="dd/MM/yyyy" />
             </div>
             <div class="form-group col-md-2">
                 <label for="date2">End Date</label>
-                <DatePicker @bind-Value="@studentFilter.EndDate" id="date2" Format="dd/MM/yyyy" />
+                <DatePicker @bind-Value="@StudentFilter.EndDate" id="date2" Format="dd/MM/yyyy" />
             </div>
             <div class="form-group col-md-2">
                 <label for="form-select">Class</label>
-                <InputSelect @bind-Value="@studentFilter.ClassId" class="form-select">
+                <InputSelect @bind-Value="@StudentFilter.ClassId" class="form-select">
                     <option value="-1">All Class</option>
-                    @foreach (var c in classes)
+                    @foreach (var c in Classes)
                     {
                         <option value="@c.Id">@c.ClassName</option>
                     }
@@ -46,7 +46,7 @@
     </EditForm>
 </div>
 <br />
-<Table @ref="table" TItem="StudentViewDto" DataSource="@studentViews" @bind-PageIndex="_pageIndex" @bind-PageSize="_pageSize" OnChange="OnPagingAsync" Total="_total">
+<Table @ref="table" TItem="StudentViewDto" DataSource="@StudentViews" @bind-PageIndex="pageIndex" @bind-PageSize="pageSize" OnChange="OnPagingAsync" Total="total">
     <Column @bind-Field="context.Stt" Title="STT"></Column>
      <Column @bind-Field="context.Name" Title="Họ tên"></Column>
      <Column @bind-Field="context.Dob" Title="Ngày sinh"></Column>
@@ -68,4 +68,4 @@
          </Space>
      </ActionColumn>
  </Table>
- <p>Tổng số sinh viên: @_total</p>
+ <p>Tổng số sinh viên: @total</p>

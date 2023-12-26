@@ -7,54 +7,53 @@ namespace BlazorServerApp.Pages
 {
     public partial class StudentList
     {
-        [Inject] IStudentService studentService { get; set; }
-        [Inject] IClassService classService { get; set; }
-        [Inject] StudentMapper studentMapper { get; set; }
+        [Inject] IStudentService StudentService { get; set; }
+        [Inject] IClassService ClassService { get; set; }
+        [Inject] StudentMapper StudentMapper { get; set; }
+        [Inject] IMessageService MessageService { get; set; }
 
-        [Inject] IMessageService messageService { get; set; }
 
-        public List<Student> students = new();
-        public Student student = new Student();
+        public List<Student> ListStudent = new();
+        public Student Student = new Student();
 
-        protected StudentFilter studentFilter = new StudentFilter();
-        private PageView<Student> pagedData = new PageView<Student>();
-        private List<StudentViewDto> studentViews = new List<StudentViewDto>();
-        private List<Class> classes = new List<Class>();
-        public List<Student> student2 = new List<Student>();
+        protected StudentFilter StudentFilter = new StudentFilter();
+        private PageView<Student> PagedData = new PageView<Student>();
+        private List<StudentViewDto> StudentViews = new List<StudentViewDto>();
+        private List<Class> Classes = new List<Class>();
+        public List<Student> Students2 = new List<Student>();
 
         StudentForm StudentForm;
-
-        int _pageIndex = 1;
-        int _pageSize = 5;
-        int _total = 0;
         private EditForm _formSearchList;
         ITable table;
-        int formMode = 1;
+
+        int pageIndex = 1;
+        int pageSize = 5;
+        int total = 0;
         protected override async Task OnInitializedAsync()
         {
-            classes = classService.GetAllClasses();
+            Classes = ClassService.GetAllClasses();
             await LoadDataAsync();
         }
 
         private async Task LoadDataAsync()
         {
-            pagedData = await studentService.GetDataPageAsync(_pageIndex, _pageSize, studentFilter);
-            student2 = pagedData.Data ?? new List<Student>();
-            studentViews = studentMapper.MapListToListViewDtoWithIndex(pagedData.Data, _pageSize * (_pageIndex - 1));
-            _total = pagedData.PageCount;
+            PagedData = await StudentService.GetDataPageAsync(pageIndex, pageSize, StudentFilter);
+            Students2 = PagedData.Data ?? new List<Student>();
+            StudentViews = StudentMapper.MapListToListViewDtoWithIndex(PagedData.Data, pageSize * (pageIndex - 1));
+            total = PagedData.PageCount;
             StateHasChanged();
         }
 
         private async void OnFinishSearchAsync(EditContext editContext)
         {
-            _pageIndex = 1;
+            pageIndex = 1;
             await LoadDataAsync();
             Console.WriteLine("Enter");
         }
 
         private void OnFinishFailedSearch(EditContext editContext)
         {
-            studentFilter = new StudentFilter();
+            StudentFilter = new StudentFilter();
         }
 
         public async Task OnPagingAsync()
@@ -64,48 +63,37 @@ namespace BlazorServerApp.Pages
 
         private async void ReloadListAsync()
         {
-            _pageIndex = 1;
-            await LoadDataAsync();
-        }
-
-        private async Task SearchAsync(StudentFilter student)
-        {
-            studentFilter = student;
-            _pageIndex = 1;
+            pageIndex = 1;
             await LoadDataAsync();
         }
 
         public void Clear()
         {
-            student = new Student();
-            StudentForm.student = new Student();
-            StudentForm.formMode = 1;
-            formMode = 1;
-            studentFilter = new StudentFilter();
+            Student = new Student();
+            StudentForm.Student = new Student();
+            StudentFilter = new StudentFilter();
             ReloadListAsync();
         }
 
         private void UpdateStudent(StudentViewDto studentView)
         {
-            //student = studentService.GetStudentById(studentView.Id);
-            student = student2?.FirstOrDefault(c => c.Id == studentView.Id);
-            StudentForm.formMode = 2;
-            StudentForm.student = student;
+            Student = Students2?.FirstOrDefault(c => c.Id == studentView.Id);
+            StudentForm.Student = Student;
             StudentForm.Open();
         }
 
         private void DeleteStudent(StudentViewDto studentView)
         {
             var result = false;
-            student = student2?.FirstOrDefault(c => c.Id == studentView.Id);
-            result = studentService.DeleteStudent(student);
+            Student = Students2?.FirstOrDefault(c => c.Id == studentView.Id);
+            result = StudentService.DeleteStudent(Student);
             if (result == true)
             {
-                messageService.Success("Xóa thành công");
+                MessageService.Success("Xóa thành công");
             }
             else
             {
-                messageService.Error("Lỗi hệ thống");
+                MessageService.Error("Lỗi hệ thống");
             }
             ReloadListAsync();
         }

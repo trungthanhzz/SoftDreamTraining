@@ -4,15 +4,15 @@
     <Template style="height:90%">
         <EditForm @ref="editForm" OnValidSubmit="@Submit"
                   OnInvalidSubmit="@SubmitFalse"
-                  Model="@studentDto">
+                  Model="@StudentDto">
             <DataAnnotationsValidator />
             <div class="form-row">
                 <div class="col-md-12 mb-8">
                     <div class="form-outline">
                         <label class="form-label" for="name">Name</label>
                         <InputText type="text" id="name" class="form-control" placeholder="Name"
-                                   @bind-Value="@studentDto.Name" />
-                        <ValidationMessage For="@(() => studentDto.Name)" />
+                                   @bind-Value="@StudentDto.Name" />
+                        <ValidationMessage For="@(() => StudentDto.Name)" />
                     </div>
                 </div>
                 <br />
@@ -20,8 +20,8 @@
                     <div class="form-outline">
                         <label class="form-label">Address</label>
                         <InputText type="text" id="address" class="form-control" placeholder="Address"
-                                   @bind-Value="@studentDto.Address" />
-                        <ValidationMessage For="@(() => studentDto.Address)" />
+                                   @bind-Value="@StudentDto.Address" />
+                        <ValidationMessage For="@(() => StudentDto.Address)" />
                     </div>
                 </div>
                 <br />
@@ -29,21 +29,21 @@
                     <div class="form-outline">
                         <label class="form-label">Birthday</label>
                         <br />
-                        <DatePicker @bind-Value="@studentDto.DateOfBirth" Format="dd/MM/yyyy" />
-                        <ValidationMessage For="@(() => studentDto.DateOfBirth)" />
+                        <DatePicker @bind-Value="@StudentDto.DateOfBirth" Format="dd/MM/yyyy" />
+                        <ValidationMessage For="@(() => StudentDto.DateOfBirth)" />
                     </div>
                 </div>
                 <div class="col-md-12 mb-8">
 
                     <label class="form-label" for="class">Class</label>
 
-                    <InputSelect @bind-Value="@studentDto.ClassId" class="form-select">
-                        @foreach (var c in classes)
+                    <InputSelect @bind-Value="@StudentDto.ClassId" class="form-select">
+                        @foreach (var c in Classes)
                         {
                             <option value="@c.Id">@c.ClassName</option>
                         }
                     </InputSelect>
-                    <ValidationMessage For="@(() => studentDto.ClassId)" />
+                    <ValidationMessage For="@(() => StudentDto.ClassId)" />
 
                 </div>
             </div>

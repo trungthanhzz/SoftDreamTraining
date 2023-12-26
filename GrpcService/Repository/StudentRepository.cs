@@ -19,7 +19,7 @@ namespace GrpcService
         }
         public Boolean AddNewStudent(Student student)
         {
-            student.Id = GetIdNewStudent();
+            student.Id = GetNewId();
             using (var session = _session.OpenSession())
             {
                 using (var transaction = session.BeginTransaction())
@@ -39,10 +39,13 @@ namespace GrpcService
                 }
             }
         }
-        public int GetIdNewStudent()
+        public int GetNewId()
         {
-            var student = GetAllStudents().OrderByDescending(x => x.Id).First();
-            return student.Id + 1;
+            using (var session = _session.OpenSession())
+            {
+                var c = session.Query<Student>().Max(c => c.Id);
+                return c + 1;
+            }
         }
 
         public Boolean DeleteStudent(Student student)

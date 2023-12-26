@@ -8,26 +8,25 @@ namespace BlazorServerApp.Pages
 {
     public partial class StudentForm
     {
-        [Inject] StudentMapper studentMapper { get; set; }
-        [Inject] IStudentService studentService { get; set; }
-        [Inject] IClassService classService { get; set; }
-        [Parameter] public EventCallback eventCallback { get; set; }
-
-        private List<Class> classes = new List<Class>();
-        public Student student = new Student();
-        bool visible = false;
-
-        public StudentDto studentDto = new StudentDto();
-
+        [Inject] StudentMapper StudentMapper { get; set; }
+        [Inject] IStudentService StudentService { get; set; }
+        [Inject] IClassService ClassService { get; set; }
+        [Parameter] public EventCallback EventCallback { get; set; }
         [Parameter] public Action Clear { get; set; }
 
-        public int formMode = 1;
+        private List<Class> Classes = new List<Class>();
+        public Student Student = new Student();
+        public StudentDto StudentDto = new StudentDto();
 
         private EditForm editForm;
 
+        bool visible = false;
+
+
+
         protected override void OnInitialized()
         {
-            classes = classService.GetAllClasses();
+            Classes = ClassService.GetAllClasses();
             base.OnInitialized();
         }
 
@@ -37,15 +36,15 @@ namespace BlazorServerApp.Pages
             try
             {
                 bool result = false;
-                student = studentMapper.MapDtoToEntity(studentDto, formMode);
-                if (formMode == 1)
+                if (Student.Id == 0)
                 {
-                    result = studentService.AddNewStudent(student);
-
+                    Student = StudentMapper.MapDtoToEntity(StudentDto);
+                    result = StudentService.AddNewStudent(Student);
                 }
-                else if (formMode == 2)
+                else
                 {
-                    result = studentService.UpdateStudent(student);
+                    Student = StudentMapper.MapDtoToEntity(StudentDto);
+                    result = StudentService.UpdateStudent(Student);
                 }
                 if (result)
                 {
@@ -70,7 +69,7 @@ namespace BlazorServerApp.Pages
         }
         public void Open()
         {
-            studentDto = studentMapper.MapEntityToDto(student, formMode);
+            StudentDto = StudentMapper.MapEntityToDto(Student);
             visible = true;
         }
 

@@ -17,12 +17,6 @@ namespace GrpcService
             Property(x => x.ClassName);
             Property(x => x.Subject);
             ManyToOne(x => x.Teacher, m => m.Column("TeacherId"));
-            Bag(x => x.Students, c =>
-            {
-                c.Key(k => k.Column("ClassId"));
-                c.Cascade(Cascade.All
-                          | Cascade.DeleteOrphans);
-            }, r => r.OneToMany());
         }
     }
 }
